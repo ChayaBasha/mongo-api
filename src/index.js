@@ -4,7 +4,9 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');
 
 const userRoutes = require('./routes/user.routes');
-const middleware = require('./middleware/errors');
+// const authRoutes = require('./routes/auth.routes');
+const journalEntryRoutes = require('./routes/journalEntry.routes');
+const errorMiddleware = require('./middleware/errors');
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -37,15 +39,17 @@ app.use(bodyParser.json());
 // ROUTE-HANDLING MIDDLEWARE FUNCTIONS
 // ************************************
 
-// This tells us where to look for user requests 
-app.use('/user', userRoutes);
+// This tells us where to look for different requests 
+// app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/journalEntry', journalEntryRoutes);
 
 // Handle 404 requests
-app.use(middleware.error404);
+app.use(errorMiddleware.error404);
 
 // Handle 500 requests
 // applies mostly to live services
-app.use(middleware.error500);
+app.use(errorMiddleware.error500);
 
 // listen on server port
 app.listen(port, function() {
