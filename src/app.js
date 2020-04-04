@@ -4,6 +4,7 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');
 
 const userRoutes = require('./routes/user.routes');
+const journalEntryRoutes = requie('./routes/journalEntry.routes')
 const errorMiddleware = require('./middleware/errors');
 
 const app = express();
@@ -33,7 +34,9 @@ app.use(logger(logLevel));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/user', userRoutes);
+// app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/journalEntry', journalEntryRoutes);
 
 // Handle 404 requests
 app.use(errorMiddleware.error404);
