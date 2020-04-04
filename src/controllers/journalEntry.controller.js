@@ -31,7 +31,7 @@ exports.createJournalEntry = function(req, res) {
 
 exports.updateJournalEntry = function(req, res) {
   journalEntry.findOneAndUpdate(
-    { _id: req.params.journalEnryId },
+    { _id: req.params.journalEntryId },
     req.body,
     { new: true },
     function(err, data) {
@@ -44,8 +44,7 @@ exports.updateJournalEntry = function(req, res) {
 };
 
 exports.deleteJournalEntry = function(req, res) {
-  console.log('working')
-  journalEntry.deleteOne({ _id: req.params.journalEnryId }, function(err) {
+  journalEntry.deleteOne({ _id: req.params.journalEntryId }, function(err) {
     if (err) {
       res.send(err);
     }

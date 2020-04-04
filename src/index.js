@@ -16,7 +16,8 @@ const logLevel = process.env.LOG_LEVEL || 'dev';
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/journal', {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useFindAndModify: false
 });
 
 // Store the instance of db so we can listen to events.
