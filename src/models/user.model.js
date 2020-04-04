@@ -15,20 +15,20 @@ const userSchema = new Schema({
   },
   userName: {
     type: String,
-    required: 'As user name is required to register'
+    required: 'As user name is required to register',
+    unique: true
   },
   password: {
     type: String,
     required: 'A password is required to register',
-    minlength: 8
 
   },
-  tokens: [{
-      token: {
-          type: String,
-          required: true
-      }
-  }],
+  // tokens: [{
+  //     token: {
+  //         type: String,
+  //         required: true
+  //     }
+  // }],
   
   birthMonth: {
       type: [
