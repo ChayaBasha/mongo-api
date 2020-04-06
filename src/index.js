@@ -2,11 +2,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const userRoutes = require('./routes/user.routes');
-// const authRoutes = require('./routes/auth.routes');
 const journalEntryRoutes = require('./routes/journalEntry.routes');
 const errorMiddleware = require('./middleware/errors');
+const authMiddleware = require('./middleware/auth');
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -28,6 +29,8 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log('Connection Successful!');
 });
+// Allow websites to talk to our API service.
+app.use(cors());
 
 // Middleware - logs server requests to console
 app.use(logger(logLevel));
@@ -43,7 +46,7 @@ app.use(bodyParser.json());
 // This tells us where to look for different requests 
 // app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
-app.use('/api/journalEntry', journalEntryRoutes);
+app.use('/api/journalEntry', authMiddleware, journalEntryRoutes);
 
 // Handle 404 requests
 app.use(errorMiddleware.error404);
