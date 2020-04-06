@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const userRoutes = require('./routes/user.routes');
 const journalEntryRoutes = require('./routes/journalEntry.routes');
@@ -28,6 +29,8 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log('Connection Successful!');
 });
+// Allow websites to talk to our API service.
+app.use(cors());
 
 // Middleware - logs server requests to console
 app.use(logger(logLevel));
