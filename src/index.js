@@ -6,7 +6,7 @@ const cors = require('cors');
 
 const userRoutes = require('./routes/user.routes');
 const journalEntryRoutes = require('./routes/journalEntry.routes');
-const errorMiddleware = require('./middleware/errors');
+const {error404, error500} = require('./middleware/errors');
 const authMiddleware = require('./middleware/auth');
 
 const app = express();
@@ -49,11 +49,11 @@ app.use('/api/user', userRoutes);
 app.use('/api/journalEntry', authMiddleware, journalEntryRoutes);
 
 // Handle 404 requests
-app.use(errorMiddleware.error404);
+app.use(error404);
 
 // Handle 500 requests
 // applies mostly to live services
-app.use(errorMiddleware.error500);
+app.use(error500);
 
 // listen on server port
 app.listen(port, function() {
