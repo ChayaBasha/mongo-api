@@ -9,6 +9,7 @@ userRoutes
   .post('/update', verifyToken, userController.updateUser) 
   .get('/:userId', userController.getUser)
   .post('/login', userController.login)
-  .delete('/:userId', userController.deleteUser);
+  .delete('/:userId', verifyToken, userController.deleteUser)
+  .post('/logout', userController.logout);
 module.exports = userRoutes;
 
