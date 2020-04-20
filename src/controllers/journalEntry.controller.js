@@ -1,26 +1,30 @@
-const journalEntry = require('../models/journalEntry.model');
+const {journalEntryModel} = require('../models/journalEntry.model');
 
-exports.getAllJournalEntries = function(req, res) {
-  journalEntry.find({}, function(err, data) {
+exports.getAllJournalEntriesByUserId = function(req, res) {
+  journalEntryModel.find({user_id:req.user._id}, function(err, journalEntries) {
     if (err) {
       res.send(err);
+    } else if (journalEntries) {
+      res.json(journalEntries);
+    } else {
+      res.status(400).send("Could not get Journal Entries ")
     }
-    res.json(data);
   });
 };
 
 exports.getJournalEntry = function(req, res) {
-  journalEntry.findById(req.params.journalEntryId, function(err, data) {
-    if (err) {
-      res.send(err);
+  journalEntryModel.findOne({_id: req.params.journalEntryId, user_id: req.user._id},
+    function(err, journalEntry){
+      if (err) {
+        res.send(err);
+      }
+      res.json(journalEntry);
     }
-    res.json(data);
-  });
+  );
 };
 
 exports.createJournalEntry = function(req, res) {
-  const newJournalEntry = new journalEntry({...req.body}); //if mongo validates properly this should work to get what was entered by the user when registering
-  
+  const newJournalEntry = new journalEntryModel({...req.body, user_id: req.user._id});
   newJournalEntry.save(function(err, data) {
     if (err) {
       res.send(err);
@@ -29,9 +33,10 @@ exports.createJournalEntry = function(req, res) {
   });
 };
 
+
 exports.updateJournalEntry = function(req, res) {
-  journalEntry.findOneAndUpdate(
-    { _id: req.params.journalEntryId },
+  journalEntryModel.findOneAndUpdate(
+    { _id: req.params.journalEntryId, user_id: req.user._id},
     req.body,
     { new: true },
     function(err, data) {
@@ -44,7 +49,7 @@ exports.updateJournalEntry = function(req, res) {
 };
 
 exports.deleteJournalEntry = function(req, res) {
-  journalEntry.deleteOne({ _id: req.params.journalEntryId }, function(err) {
+  journalEntry.deleteOne({ _id: req.params.journalEntryId, user_id: req.user._id }, function(err) {
     if (err) {
       res.send(err);
     }

@@ -17,7 +17,13 @@ const journalEntrySchema = new Schema({
     type: Date,
     default: Date.now
   },
+  user_id: {
+    type: Schema.Types.ObjectId,
+    required:true
+
+  }
   
 });
 
-module.exports = mongoose.model('journalEntry', journalEntrySchema);
+const journalEntryModel = mongoose.model('journalEntry', journalEntrySchema);
+module.exports = {journalEntryModel, journalEntrySchema};

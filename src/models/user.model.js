@@ -1,6 +1,7 @@
   
 //imports 
 const mongoose = require('mongoose');
+const {journalEntrySchema} = require('./journalEntry.model');
 
 //set up
 const Schema = mongoose.Schema;
@@ -23,12 +24,6 @@ const userSchema = new Schema({
     required: 'A password is required to register',
 
   },
-  // tokens: [{
-  //     token: {
-  //         type: String,
-  //         required: true
-  //     }
-  // }],
   
   birthMonth: {
       type: [
@@ -41,7 +36,8 @@ const userSchema = new Schema({
 
   birthYear: {
     type: Number,
-  }
+  },
+
 });
 
 module.exports = mongoose.model('User', userSchema);

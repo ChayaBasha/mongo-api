@@ -5,7 +5,7 @@ const journalEntryRoutes = express.Router();
 // Routes if there is nothing added to the Path
 
 journalEntryRoutes
-  .get('/', journalEntryController.getAllJournalEntries) 
+  .get('/', journalEntryController.getAllJournalEntriesByUserId) 
   .post('/', journalEntryController.createJournalEntry); 
 
 journalEntryRoutes
