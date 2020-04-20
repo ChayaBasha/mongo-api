@@ -13,12 +13,13 @@ exports.getAllJournalEntriesByUserId = function(req, res) {
 };
 
 exports.getJournalEntry = function(req, res) {
-  journalEntryModel.findOne({_id: req.params.journalEntryId, user_id: req.user._id},
+  journalEntryModel.findOne({_id: req.params._id, user_id: req.user._id},
     function(err, journalEntry){
       if (err) {
         res.send(err);
       }
       res.json(journalEntry);
+      console.log(JSON.stringify(journalEntry));
     }
   );
 };
