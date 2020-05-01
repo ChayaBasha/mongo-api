@@ -4,7 +4,7 @@ const {createToken} = require('../services/auth.service');
 
 module.exports = async function (req, res, next) {
     const authHeader = req.headers['auth-token'] || req.headers['authorization'];
-    const token = authHeader.split('Bearer ')[1]; 
+    const token = authHeader && authHeader.split('Bearer ')[1]; 
 
     if (!token) {
         res.status(401).send({auth: false, msg: 'You are not Authorized. Token Error' });
